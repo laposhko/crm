@@ -1,17 +1,12 @@
-import Image from 'next/image';
-// import styles from './page.module.css';
-import StatusLabel from './components/active-label';
-import { Status } from './components/active-label';
+import AddCompanyButton from '@/app/components/add-company-button';
+// import PageLayout from './components/page-layout';
 export default function Home() {
   return (
     <main>
-      <h1 className="text-3xl font-bold underline">Home Page</h1>
-      <StatusLabel status={Status.Active}>Active</StatusLabel>
-      <StatusLabel status={Status.NotActive}>Active</StatusLabel>
-      <StatusLabel status={Status.Pending}>Active</StatusLabel>
-      <StatusLabel status={Status.Suspended
-        
-      }>Active</StatusLabel>
+      {/* <PageLayout> */}
+      <h1 className="text-xl text-red-300">Home page</h1>
+      <AddCompanyButton />
+      {/* </PageLayout> */}
     </main>
   );
 }

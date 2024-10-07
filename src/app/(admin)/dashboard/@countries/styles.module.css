@@ -1,0 +1,4 @@
+.block {
+  background-image: url('/images/world.svg');
+  background-size: contain;
+}
