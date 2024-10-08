@@ -11,10 +11,22 @@ export interface PageProps {}
 export default function Page({}: PageProps) {
   return (
     <>
-      <Header>Companies</Header>
+      {/* <p>jjjj</p> */}
+      {/* <Header>Companies</Header>
       <Toolbar action={<AddCompanyButton></AddCompanyButton>}>
         <SearchInput></SearchInput>
       </Toolbar>
+      <CompanyTable>
+        <CompanyRow
+          id={1}
+          category={'Preoducts'}
+          company={'Costro'}
+          status={Status.Pending}
+          promotion={true}
+          country="USA"
+          joinedDate={'02.02.2022'}
+        ></CompanyRow>
+      </CompanyTable> */}
       <CompanyTable>
         <CompanyRow
           id={1}

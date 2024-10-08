@@ -1,7 +1,7 @@
 import React from 'react';
 import DashboardCard from '@/app/components/dashboard-card';
 import Table from '@/app/components/table';
-export interface SalesProps {}
+export interface PageProps {}
 
 const companies = [
   { name: 'Costco Wholesale', sold: 459, income: 600 },
@@ -11,7 +11,7 @@ const companies = [
   { name: 'Costco Wholesale', sold: 459, income: 600 },
   { name: 'Costco Wholesale', sold: 459, income: 600 },
 ];
-export default function Sales({}: SalesProps) {
+export default function Page({}: PageProps) {
   return (
     <DashboardCard label="Sales details">
       <Table columns={['Company', 'Sold', 'Income']} items={companies}></Table>

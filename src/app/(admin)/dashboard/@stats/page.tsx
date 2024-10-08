@@ -1,9 +1,9 @@
 import React from 'react';
 import StatCard from '@/app/components/stat-card';
 import { StatCardType } from '@/app/components/stat-card';
-export interface StatsProps {}
+export interface PageProps {}
 
-export default function Stats({}: StatsProps) {
+export default function Page({}: PageProps) {
   return (
     <ul className="grid grid-cols-12 gap-5">
       <StatCard

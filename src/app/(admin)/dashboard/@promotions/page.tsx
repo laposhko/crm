@@ -11,9 +11,9 @@ const promotions = [
   { company: 'Costco Wholesale', name: 'Norem ipsum dolor', discount: '-40%' },
   { company: 'Costco Wholesale', name: 'Norem ipsum dolor', discount: '-40%' },
 ];
-export interface PromotionsProps {}
+export interface PageProps {}
 
-export default function Promotions({}: PromotionsProps) {
+export default function Page({}: PageProps) {
   return (
     <DashboardCard label="Promotions">
       <Table columns={['Company', 'Name', '%']} items={promotions}></Table>
