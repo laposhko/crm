@@ -1,5 +1,6 @@
 import React from 'react';
 import DashboardCard from '@/app/components/dashboard-card';
+import Table from '@/app/components/table';
 export interface SalesProps {}
 
 const companies = [
@@ -13,7 +14,8 @@ const companies = [
 export default function Sales({}: SalesProps) {
   return (
     <DashboardCard label="Sales details">
-      <table className="text-xs w-full">
+      <Table columns={['Company', 'Sold', 'Income']} items={companies}></Table>
+      {/* <table className="text-xs w-full">
         <thead className="rounded">
           <tr className="h-7 rounded">
             <th className="rounded-tl-sm rounded-bl-sm font-normal bg-gray-900 text-white w-[54%] text-left pl-5">
@@ -36,7 +38,7 @@ export default function Sales({}: SalesProps) {
             </tr>
           ))}
         </tbody>
-      </table>
+      </table> */}
     </DashboardCard>
   );
 }

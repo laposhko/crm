@@ -13,8 +13,8 @@ const countries = [
 export default function Countries({}: CountriesProps) {
   return (
     <DashboardCard label="Countries of companies">
-      <div className="flex items-end pb-5 px-5 gap-2 justify-end relative">
-        <ul className="absolute left-5">
+      <div className="flex items-end pb-5 px-5 gap-2 justify-end relative h-[80%] ">
+        <ul className="absolute left-5 bottom-0">
           {countries.map((country, id) => (
             <li
               key={id}
