@@ -1,17 +1,18 @@
 import React from 'react';
 import DashboardCard from '@/app/components/dashboard-card';
 import Table from '@/app/components/table';
+import { getSummarySales } from '@/lib/api';
 export interface PageProps {}
-
-const companies = [
-  { name: 'Costco Wholesale', sold: 459, income: 600 },
-  { name: 'Costco Wholesale', sold: 459, income: 600 },
-  { name: 'Costco Wholesale', sold: 459, income: 600 },
-  { name: 'Costco Wholesale', sold: 459, income: 600 },
-  { name: 'Costco Wholesale', sold: 459, income: 600 },
-  { name: 'Costco Wholesale', sold: 459, income: 600 },
-];
-export default function Page({}: PageProps) {
+// const companies = [
+//   { name: 'Costco Wholesale', sold: 459, income: 600 },
+//   { name: 'Costco Wholesale', sold: 459, income: 600 },
+//   { name: 'Costco Wholesale', sold: 459, income: 600 },
+//   { name: 'Costco Wholesale', sold: 459, income: 600 },
+//   { name: 'Costco Wholesale', sold: 459, income: 600 },
+//   { name: 'Costco Wholesale', sold: 459, income: 600 },
+// ];
+export default async function Page({}: PageProps) {
+  const companies = await getSummarySales();
   return (
     <DashboardCard label="Sales details">
       <Table columns={['Company', 'Sold', 'Income']} items={companies}></Table>

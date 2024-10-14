@@ -1,30 +1,32 @@
 import React from 'react';
 import StatCard from '@/app/components/stat-card';
 import { StatCardType } from '@/app/components/stat-card';
+import { getSummaryStats } from '@/lib/api';
 export interface PageProps {}
 
-export default function Page({}: PageProps) {
+export default async function Page({}: PageProps) {
+  const data = await getSummaryStats();
   return (
     <ul className="grid grid-cols-12 gap-5">
       <StatCard
         type={StatCardType.Gradient}
         label="Total promotions"
-        counter={432}
+        counter={data.promotions}
       ></StatCard>
       <StatCard
         type={StatCardType.Gradient}
         label="Total category"
-        counter={8}
+        counter={data.categories}
       ></StatCard>
       <StatCard
         type={StatCardType.Gradient}
         label="New companies"
-        counter={28}
+        counter={data.newCompanies}
       ></StatCard>
       <StatCard
         type={StatCardType.Gradient}
         label="Total active companies"
-        counter={670}
+        counter={data.activeCompanies}
       ></StatCard>
     </ul>
   );
