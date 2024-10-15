@@ -6,7 +6,7 @@ export interface TableHeaderProps {
 
 export default function TableHeader({ columns }: TableHeaderProps) {
   return (
-    <thead className="rounded">
+    <thead className="sticky top-0 rounded">
       <tr className="h-7 rounded">
         <th className="rounded-tl-sm rounded-bl-sm font-normal  bg-gray-900 text-white text-left pl-5">
           {columns[0]}

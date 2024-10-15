@@ -6,10 +6,21 @@ export interface PageProps {}
 
 export default async function Page({}: PageProps) {
   const promotions = await getPromotions();
-  console.log(promotions);
+  const filteredPromotions = promotions.map(
+    ({ companyTitle, title, discount }) => ({
+      companyTitle,
+      title,
+      discount: `-${discount}%`,
+    })
+  );
   return (
     <DashboardCard label="Promotions">
-      <Table columns={['Company', 'Name', '%']} items={promotions}></Table>
+      <Table
+        tableName="promotions"
+        columns={['Company', 'Name', '%']}
+        items={filteredPromotions}
+        numberOfRows={7}
+      ></Table>
     </DashboardCard>
   );
 }
