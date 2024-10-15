@@ -14,13 +14,13 @@ export default function Layout({
   toolbar,
 }: LayoutProps) {
   return (
-    <div>
+    <>
       {modal}
       {header}
       <main className="">
         {toolbar}
         {children}
       </main>
-    </div>
+    </>
   );
 }

@@ -8,7 +8,6 @@ export interface PageProps {}
 
 export default async function Page({}: PageProps) {
   const companies = await getCompanies();
-  console.log(companies);
 
   return (
     <CompanyTable>
