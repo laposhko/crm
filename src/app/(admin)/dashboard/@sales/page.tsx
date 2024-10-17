@@ -16,7 +16,7 @@ export default async function Page({}: PageProps) {
   const filteredSales = sales.map(({ companyTitle, sold, income }) => ({
     companyTitle,
     sold,
-    income,
+    income: `$${income}`,
   }));
   return (
     <DashboardCard label="Sales details">
