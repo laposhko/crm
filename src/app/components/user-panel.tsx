@@ -18,7 +18,9 @@ export default function UserPanel({}: UserPanelProps) {
       >
         <Image width={44} height={44} src="/images/avatar.png" alt="avatar" />
         <div>
-          <p className="text-base	font-semibold text-gray-900">NAME</p>
+          <p className="text-base	font-semibold text-gray-900">
+            {userData.name}
+          </p>
           <p className="text-sm	font-light text-gray-900">{userData.email}</p>
         </div>
         <UserPopupMenu visibility={userPopupMenuVisible}></UserPopupMenu>

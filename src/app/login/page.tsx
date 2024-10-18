@@ -8,14 +8,22 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useDispatch } from 'react-redux';
 import InputField from '../components/input-field';
 import Button from '../components/button';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../../../firebase';
 import { useRouter } from 'next/navigation';
 export interface PageProps {}
+export type LoginFieldValues = {
+  email: string;
+  password: string;
+};
+
+const initialValues: LoginFieldValues = {
+  email: '',
+  password: '',
+};
 const validationSchema = Yup.object({
   email: Yup.string().required('Required'),
   password: Yup.string().min(6, 'Minimum 6 characters').required('Required'),
 });
+
 export default function Page({}: PageProps) {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -24,21 +32,13 @@ export default function Page({}: PageProps) {
       <ToastContainer></ToastContainer>
       <h1 className="text-3xl font-semibold text-gray-900">Login</h1>
       <Formik
-        initialValues={{ email: '', password: '' }}
+        initialValues={initialValues}
         validationSchema={validationSchema} // Optional: validation with Yup
         onSubmit={async (values, { setSubmitting }) => {
-          // Submit form values
           console.log('Form values:', values);
           try {
             console.log('try');
             dispatch(logIn(values));
-            // const userCredential = await signInWithEmailAndPassword(
-            //   auth,
-            //   values.email,
-            //   values.password
-            // );
-            // const user = userCredential.user;
-            // console.log('Logged in user:', user);
             router.push('/dashboard');
           } catch (err) {
             console.log('error', err);

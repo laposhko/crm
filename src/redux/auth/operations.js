@@ -1,5 +1,10 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
-import { signInWithEmailAndPassword, getAuth, signOut } from 'firebase/auth';
+import {
+  signInWithEmailAndPassword,
+  getAuth,
+  signOut,
+  updateProfile,
+} from 'firebase/auth';
 import { auth } from '../../../firebase';
 export const logIn = createAsyncThunk(
   'auth/logIn',
@@ -30,3 +35,20 @@ export const logOut = createAsyncThunk('auth/logOut', async (_, thunkAPI) => {
     thunkAPI.rejectWithValue(error.message);
   }
 });
+export const updateUser = createAsyncThunk(
+  'auth/update',
+  async (values, thunkAPI) => {
+    try {
+      const user = auth.currentUser; // Get the current logged-in user
+      console.log(user);
+      await updateProfile(user, {
+        displayName: values.name, // Set the new display name
+      });
+      return values.name;
+    } catch (error) {
+      console.log(error);
+
+      thunkAPI.rejectWithValue(error.message);
+    }
+  }
+);
