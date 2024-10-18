@@ -2,7 +2,7 @@
 
 import React from 'react';
 import CompanyForm, { CompanyFormProps } from '@/app/components/company-form';
-import Modal, { ModalProps } from './ modal';
+import Modal, { ModalProps } from './modal';
 
 export interface CompanyFormModalProps extends ModalProps {
   onSubmit: CompanyFormProps['onSubmit'];

@@ -3,14 +3,15 @@
 import React from 'react';
 import { useRouter } from 'next/navigation';
 import Modal from '@/app/components/modal';
-import CompanyForm from '@/app/components/company-form';
+import SettingForm from '@/app/components/settings-form';
 export interface PageProps {}
 
 export default function Page({}: PageProps) {
   const router = useRouter();
+  console.log('form');
   return (
     <Modal show={true} onClose={() => router.back()}>
-      <CompanyForm onSubmit={console.log}></CompanyForm>
+      <SettingForm></SettingForm>
     </Modal>
   );
 }

@@ -2,9 +2,10 @@
 import React from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
+import { logIn } from '../../redux/auth/operations';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-
+import { useDispatch } from 'react-redux';
 import InputField from '../components/input-field';
 import Button from '../components/button';
 import { signInWithEmailAndPassword } from 'firebase/auth';
@@ -17,7 +18,7 @@ const validationSchema = Yup.object({
 });
 export default function Page({}: PageProps) {
   const router = useRouter();
-
+  const dispatch = useDispatch();
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-8">
       <ToastContainer></ToastContainer>
@@ -30,13 +31,14 @@ export default function Page({}: PageProps) {
           console.log('Form values:', values);
           try {
             console.log('try');
-            const userCredential = await signInWithEmailAndPassword(
-              auth,
-              values.email,
-              values.password
-            );
-            const user = userCredential.user;
-            console.log('Logged in user:', user);
+            dispatch(logIn(values));
+            // const userCredential = await signInWithEmailAndPassword(
+            //   auth,
+            //   values.email,
+            //   values.password
+            // );
+            // const user = userCredential.user;
+            // console.log('Logged in user:', user);
             router.push('/dashboard');
           } catch (err) {
             console.log('error', err);
