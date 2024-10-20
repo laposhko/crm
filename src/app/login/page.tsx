@@ -28,7 +28,7 @@ export default function Page({}: PageProps) {
   const router = useRouter();
   const dispatch = useDispatch();
   return (
-    <div className="flex flex-col justify-center items-center h-screen gap-8">
+    <div className="flex flex-col justify-center items-center h-screen gap-8 relative">
       <ToastContainer></ToastContainer>
       <h1 className="text-3xl font-semibold text-gray-900">Login</h1>
       <Formik
@@ -86,6 +86,10 @@ export default function Page({}: PageProps) {
           </Form>
         )}
       </Formik>
+      <div className="absolute bottom-10 right-10 p-10 bg-yellow-100">
+        <b>login details for testing:</b> <br /> email: admin@admin.com <br />
+        password: adminadmin
+      </div>
     </div>
   );
 }
