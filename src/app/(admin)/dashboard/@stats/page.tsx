@@ -11,7 +11,7 @@ export default async function Page({}: PageProps) {
       <StatCard
         type={StatCardType.Gradient}
         label="Total promotions"
-        counter={data.promotions}
+        counter={Number(data.promotions)}
       ></StatCard>
       <StatCard
         type={StatCardType.Gradient}
