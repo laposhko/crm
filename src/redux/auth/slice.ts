@@ -1,27 +1,44 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { logIn, logOut, updateUser } from './operations';
+interface User {
+  email: string | null;
+  name: string | null;
+  photoURL: string | null;
+}
+
+interface AuthState {
+  user: User;
+  accessToken: string | null;
+  emailVerified: boolean | null;
+  refreshToken: string | null;
+  isLoggingIn: boolean | null;
+  isLoggedIn: boolean | null;
+  isError: boolean | null;
+}
+const initialState: AuthState = {
+  user: {
+    email: null,
+    name: null,
+    photoURL: null,
+  },
+  accessToken: null,
+  emailVerified: false,
+  refreshToken: null,
+  isLoggingIn: null,
+  isLoggedIn: null,
+  isError: null,
+};
 const authSlice = createSlice({
   name: 'auth',
-  initialState: {
-    user: {
-      email: null,
-      name: null,
-      photoURL: null,
-    },
-    accessToken: null,
-    emailVerified: false,
-    refreshToken: null,
-    isLoggingIn: null,
-    isLoggedIn: null,
-    isError: null,
-  },
-  extraReducers: (builder) =>
+  initialState,
+  reducers: {},
+  extraReducers: (builder) => {
     builder
       .addCase(logIn.pending, (state) => {
         state.isError = false;
         state.isLoggingIn = true;
       })
-      .addCase(logIn.fulfilled, (state, action) => {
+      .addCase(logIn.fulfilled, (state, action: PayloadAction<any>) => {
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.emailVerified = action.payload.emailVerified;
@@ -41,7 +58,7 @@ const authSlice = createSlice({
         state.isError = false;
         state.isLoggingIn = true;
       })
-      .addCase(logOut.fulfilled, (state, action) => {
+      .addCase(logOut.fulfilled, (state) => {
         state.accessToken = null;
         state.refreshToken = null;
         state.emailVerified = null;
@@ -57,10 +74,12 @@ const authSlice = createSlice({
         state.isLoggingIn = false;
         state.isError = true;
       })
-      .addCase(updateUser.fulfilled, (state, action) => {
+      .addCase(updateUser.fulfilled, (state, action: PayloadAction<string>) => {
         state.user.name = action.payload;
-      }),
+      });
+  },
 });
+
 const authReducer = authSlice.reducer;
 
 export default authReducer;

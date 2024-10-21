@@ -11,6 +11,7 @@ export default function UserPanel({}: UserPanelProps) {
   console.log(userData);
   const [userPopupMenuVisible, setUserPopupMenuVisible] = useState(false);
   return (
+    userData &&
     userData.email && (
       <div
         onClick={() => setUserPopupMenuVisible(!userPopupMenuVisible)}
@@ -19,7 +20,7 @@ export default function UserPanel({}: UserPanelProps) {
         <Image width={44} height={44} src="/images/avatar.png" alt="avatar" />
         <div>
           <p className="text-base	font-semibold text-gray-900">
-            {userData.name}
+            {userData.displayName}
           </p>
           <p className="text-sm	font-light text-gray-900">{userData.email}</p>
         </div>

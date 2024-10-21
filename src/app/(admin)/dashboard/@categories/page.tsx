@@ -15,7 +15,7 @@ export default async function Page({}: PageProps) {
             key={id}
             type={StatCardType.Dark}
             label={category.title}
-            counter={category.id}
+            counter={Number(category.id)}
           ></StatCard>
         ))}
       </ul>

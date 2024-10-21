@@ -5,7 +5,7 @@ import * as Yup from 'yup';
 import { logIn } from '../../redux/auth/operations';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch';
 import InputField from '../components/input-field';
 import Button from '../components/button';
 import { useRouter } from 'next/navigation';
@@ -26,7 +26,7 @@ const validationSchema = Yup.object({
 
 export default function Page({}: PageProps) {
   const router = useRouter();
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-8 relative">
       <ToastContainer></ToastContainer>

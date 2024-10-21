@@ -1,13 +1,14 @@
 'use client';
 import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch';
 import { updateUser } from '@/redux/auth/operations';
 import { Form, Formik } from 'formik';
 import Button from './button';
 import InputField from './input-field';
 import { Field } from 'formik';
 import { toast, ToastContainer } from 'react-toastify';
+import Image from 'next/image';
 export interface SettingsFormProps {}
 export type SettingsFieldValues = {
   name: string;
@@ -15,7 +16,7 @@ export type SettingsFieldValues = {
 };
 
 export default function SettingsForm({}: SettingsFormProps) {
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const initialValues: SettingsFieldValues = {
@@ -90,7 +91,7 @@ export default function SettingsForm({}: SettingsFormProps) {
             /> */}
               {selectedImage && (
                 <div className="mt-4">
-                  <img
+                  <Image
                     src={selectedImage}
                     alt="Selected"
                     className="h-32 w-32 object-cover mt-2"

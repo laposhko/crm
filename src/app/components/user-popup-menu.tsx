@@ -1,6 +1,6 @@
 import clsx from 'clsx';
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useAppDispatch } from '@/lib/hooks/useAppDispatch';
 import { useRouter } from 'next/navigation';
 import { logOut } from '@/redux/auth/operations';
 export interface UserPopupMenuProps {
@@ -9,7 +9,7 @@ export interface UserPopupMenuProps {
 
 export default function UserPopupMenu({ visibility }: UserPopupMenuProps) {
   console.log(visibility);
-  const dispatch = useDispatch();
+  const dispatch = useAppDispatch();
   const router = useRouter();
 
   return (

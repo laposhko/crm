@@ -10,7 +10,7 @@ export enum StatCardType {
 export interface StatCardProps {
   type: StatCardType;
   label: string;
-  counter: string;
+  counter: number;
 }
 
 export default function StatCard({ type, label, counter }: StatCardProps) {
