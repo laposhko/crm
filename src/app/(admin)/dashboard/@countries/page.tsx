@@ -13,7 +13,6 @@ export interface PageProps {}
 // ];
 export default async function Page({}: PageProps) {
   const countries = await getCountries();
-  console.log(countries);
   return (
     <DashboardCard label="Countries of companies">
       <div className="flex items-end pb-5 px-5 gap-2 justify-end relative h-[80%] ">
