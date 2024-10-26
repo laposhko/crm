@@ -32,14 +32,16 @@ export const logIn = createAsyncThunk<
   ThunkApiConfig // Config for thunkAPI including rejectWithValue type
 >('auth/logIn', async (values: LogInPayload, thunkAPI) => {
   try {
-    console.log('Operation start');
+    console.log('Operation start', values);
     const userCredential = await signInWithEmailAndPassword(
       auth,
       values.email,
       values.password
     );
-    console.log('Operation success', userCredential.user);
-    return userCredential; // Return the user credentials (includes user data)
+    console.log('Operation success', userCredential);
+    const userData = 'ssss';
+    console.log('userDate', userData);
+    return userData; // Return the user credentials (includes user data)
   } catch (error: any) {
     console.log(error);
     return thunkAPI.rejectWithValue(error.message || 'Login failed');

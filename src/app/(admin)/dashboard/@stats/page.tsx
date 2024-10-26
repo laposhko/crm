@@ -6,6 +6,7 @@ export interface PageProps {}
 
 export default async function Page({}: PageProps) {
   const data = await getSummaryStats();
+  console.log(typeof data.promotions);
   return (
     <ul className="grid grid-cols-12 gap-5">
       <StatCard
