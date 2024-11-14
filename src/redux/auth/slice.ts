@@ -2,7 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { logIn, logOut, updateUser } from './operations';
 interface User {
   email: string | null;
-  name: string | null;
+  displayName: string | null;
   photoURL: string | null;
 }
 
@@ -18,7 +18,7 @@ interface AuthState {
 const initialState: AuthState = {
   user: {
     email: null,
-    name: null,
+    displayName: null,
     photoURL: null,
   },
   accessToken: null,
@@ -43,9 +43,9 @@ const authSlice = createSlice({
         state.accessToken = action.payload.accessToken;
         state.refreshToken = action.payload.refreshToken;
         state.emailVerified = action.payload.emailVerified;
-        state.user.email = action.payload.email;
-        state.user.name = action.payload.displayName;
-        state.user.photoURL = action.payload.photoURL;
+        state.user.email = action.payload.user.email;
+        state.user.displayName = action.payload.user.name;
+        state.user.photoURL = action.payload.user.photoURL;
         state.isError = false;
         state.isLoggingIn = false;
         state.isLoggedIn = true;
@@ -64,7 +64,7 @@ const authSlice = createSlice({
         state.refreshToken = null;
         state.emailVerified = null;
         state.user.email = null;
-        state.user.name = null;
+        state.user.displayName = null;
         state.user.photoURL = null;
         state.isError = false;
         state.isLoggingIn = false;
@@ -76,7 +76,7 @@ const authSlice = createSlice({
         state.isError = true;
       })
       .addCase(updateUser.fulfilled, (state, action: PayloadAction<string>) => {
-        state.user.name = action.payload;
+        state.user.displayName = action.payload;
       });
   },
 });

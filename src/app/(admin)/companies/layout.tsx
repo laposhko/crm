@@ -3,19 +3,20 @@ import React from 'react';
 export interface LayoutProps {
   children: React.ReactNode;
   header: React.ReactNode;
-  modal: React.ReactNode;
+  newModal: React.ReactNode;
   toolbar: React.ReactNode;
 }
 
 export default function Layout({
   children,
   header,
-  modal,
+  newModal,
   toolbar,
 }: LayoutProps) {
   return (
     <>
-      {modal}
+      {newModal}
+      {/* {settingsModal} */}
       {header}
       <main className="">
         {toolbar}

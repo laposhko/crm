@@ -7,6 +7,8 @@ import { Form, Formik } from 'formik';
 import Button from './button';
 import InputField from './input-field';
 import { Field } from 'formik';
+import { useSelector } from 'react-redux';
+import { selectAuthUser } from '@/redux/auth/selectors';
 import { toast, ToastContainer } from 'react-toastify';
 import Image from 'next/image';
 export interface SettingsFormProps {}
@@ -18,6 +20,7 @@ export type SettingsFieldValues = {
 export default function SettingsForm({}: SettingsFormProps) {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const user = useSelector(selectAuthUser);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const initialValues: SettingsFieldValues = {
     name: '',
@@ -74,6 +77,7 @@ export default function SettingsForm({}: SettingsFormProps) {
 
             {/* Image Upload field */}
             <div className="relative">
+              {/* <Image src={avatar} alt="avatar" width={100} height={100}></Image> */}
               <label htmlFor="image" className="block text-sm font-medium">
                 Upload Image
               </label>

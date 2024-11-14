@@ -1,18 +1,23 @@
 'use client';
-import React, { useEffect } from 'react';
+import React, { useEffect, use } from 'react';
 import Header from '@/app/components/header';
 import { notFound } from 'next/navigation';
 export interface PageProps {
-  params: {
-    id: string;
-  };
+  // params: {
+  //   id: string;
+  // };
 }
-export default function Page({ params }: PageProps) {
-  useEffect(() => {
-    const id = Number.parseInt(params.id);
-    if (Number.isNaN(id)) {
-      notFound();
-    }
-  }, [params.id]);
-  return <Header>Company ssssss</Header>;
+// async function fetchParams(params: PageProps['params']) {
+//   return params;
+// }
+export default function Page({}: PageProps) {
+  // const unwrappedParams = use(fetchParams(params));
+
+  // useEffect(() => {
+  //   const id = Number.parseInt(unwrappedParams.id);
+  //   if (Number.isNaN(id)) {
+  //     notFound();
+  //   }
+  // }, [unwrappedParams.id]);
+  return <Header>Company ssaaaaaassss</Header>;
 }
