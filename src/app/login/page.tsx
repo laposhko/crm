@@ -39,14 +39,17 @@ export default function Page({}: PageProps) {
         onSubmit={async (values, { setSubmitting }) => {
           console.log('Form values:', values);
           try {
-            console.log('try');
-            dispatch(logIn(values));
-            router.push('/dashboard');
+            const resultAction = await dispatch(logIn(values));
+
+            if (logIn.fulfilled.match(resultAction)) {
+              await router.push('/dashboard');
+            } else if (logIn.rejected.match(resultAction)) {
+              toast.error('Invalid details'); // Display the error message (use a toast, modal, or console for now)
+            }
           } catch (err) {
             console.log('error', err);
           }
           setSubmitting(false);
-          // toast('Successfully login ');
         }}
       >
         {({ isSubmitting }) => (
