@@ -1,5 +1,5 @@
 'use client';
-import React from 'react';
+import React, { useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 import { logIn } from '../../redux/auth/operations';
@@ -9,6 +9,7 @@ import { useAppDispatch } from '@/lib/hooks/useAppDispatch';
 import InputField from '../components/input-field';
 import Button from '../components/button';
 import { useRouter } from 'next/navigation';
+import Image from 'next/image';
 export interface PageProps {}
 export type LoginFieldValues = {
   email: string;
@@ -27,6 +28,7 @@ const validationSchema = Yup.object({
 export default function Page({}: PageProps) {
   const router = useRouter();
   const dispatch = useAppDispatch();
+  const [showPassword, setShowPassword] = useState(false);
   return (
     <div className="flex flex-col justify-center items-center h-screen gap-8 relative">
       <ToastContainer></ToastContainer>
@@ -68,12 +70,21 @@ export default function Page({}: PageProps) {
 
             <div className="relative">
               <InputField
-                type="password"
+                type={showPassword ? 'text' : 'password'}
                 label="password"
                 id="password"
                 placeholder="Password"
                 name="password"
               ></InputField>
+
+              <Image
+                className="cursor-pointer absolute top-[33%] right-2"
+                onClick={() => setShowPassword(!showPassword)}
+                width={16}
+                height={16}
+                src={`/icons/${showPassword ? 'hide-pass' : 'show-pass'}.svg`}
+                alt="password icon"
+              />
               <ErrorMessage
                 className="absolute text-red-700 bottom-2 right-2 text-xs"
                 name="password"
