@@ -45,7 +45,7 @@ export default function SettingsForm({}: SettingsFormProps) {
         // validationSchema={validationSchema}
         onSubmit={(values, { setSubmitting }) => {
           console.log(values);
-          if (values.name && values.image) {
+          if (values.name || values.image) {
             try {
               dispatch(updateUser(values));
               router.back();
