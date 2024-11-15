@@ -56,6 +56,7 @@ export default function SettingsForm({}: SettingsFormProps) {
             }
           } else {
             toast.error('Form cannot be empty');
+            setSubmitting(false);
           }
         }}
       >
@@ -77,7 +78,21 @@ export default function SettingsForm({}: SettingsFormProps) {
 
             {/* Image Upload field */}
             <div className="relative">
-              {/* <Image src={avatar} alt="avatar" width={100} height={100}></Image> */}
+              {/* Image Preview */}
+
+              {/* <Image
+                src={selectedImage || '/images/default-avatar.png'}
+                alt="avatar"
+                width={100}
+                height={100}
+              ></Image> */}
+              <Image
+                src={selectedImage || '/images/default-avatar.png'}
+                alt="Selected"
+                width={100}
+                height={100}
+                className="h-32 w-32 object-cover mt-2 rounded-full"
+              />
               <label htmlFor="image" className="block text-sm font-medium">
                 Upload Image
               </label>
@@ -93,17 +108,10 @@ export default function SettingsForm({}: SettingsFormProps) {
               component="div"
               className="text-red-700 text-sm mt-1"
             /> */}
-              {selectedImage && (
-                <div className="mt-4">
-                  <Image
-                    src={selectedImage}
-                    alt="Selected"
-                    className="h-32 w-32 object-cover mt-2"
-                  />
-                </div>
-              )}
             </div>
-            <Button disabled={isSubmitting}>Submit</Button>
+            <Button disabled={isSubmitting}>
+              {isSubmitting ? 'Submitting...' : 'Submit'}
+            </Button>
             {/* Submit button
             <button
               type="submit"
