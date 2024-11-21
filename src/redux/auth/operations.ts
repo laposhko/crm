@@ -17,7 +17,7 @@ interface LogInPayload {
 // Define the shape of the payload for the update user action
 interface UpdateUserPayload {
   name: string;
-  image: File | null;
+  image: string;
 }
 
 // Define the shape of the ThunkApiConfig
@@ -74,10 +74,12 @@ export const logOut = createAsyncThunk<void, void, ThunkApiConfig>(
 
 // Update user profile action
 export const updateUser = createAsyncThunk<
-  string, // Return type (the updated displayName)
+  UpdateUserPayload, // Return type (the updated displayName)
   UpdateUserPayload, // Payload type (name and image)
   ThunkApiConfig // Config for thunkAPI
 >('auth/update', async (values: UpdateUserPayload, thunkAPI) => {
+  console.log(values);
+
   try {
     const user = auth.currentUser; // Get the current logged-in user
     if (!user) {
@@ -89,9 +91,9 @@ export const updateUser = createAsyncThunk<
     // Update the display name
     await updateProfile(user, {
       displayName: values.name,
+      photoURL: values.image,
     });
-
-    return values.name; // Return the updated name
+    return values; // Return the updated name
   } catch (error: any) {
     console.log(error);
     return thunkAPI.rejectWithValue(error.message || 'Failed to update user');

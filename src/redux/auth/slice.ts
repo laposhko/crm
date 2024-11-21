@@ -75,8 +75,23 @@ const authSlice = createSlice({
         state.isLoggingIn = false;
         state.isError = true;
       })
-      .addCase(updateUser.fulfilled, (state, action: PayloadAction<string>) => {
-        state.user.displayName = action.payload;
+      .addCase(updateUser.pending, (state) => {
+        state.isError = false;
+        state.isLoggingIn = true;
+      })
+      .addCase(updateUser.fulfilled, (state, action: PayloadAction<any>) => {
+        console.log(action.payload);
+        if (action.payload.name) {
+          console.log('there is name updated');
+          state.user.displayName = action.payload.name;
+        }
+        if (action.payload.image) {
+          console.log('there is img updated');
+          state.user.photoURL = action.payload.image;
+        }
+      })
+      .addCase(updateUser.rejected, (state) => {
+        state.isError = true;
       });
   },
 });

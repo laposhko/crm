@@ -11,7 +11,13 @@ export default function UserPanel({}: UserPanelProps) {
     userData &&
     userData.email && (
       <div className="flex gap-3 relative">
-        <Image width={44} height={44} src="/images/avatar.png" alt="avatar" />
+        <img
+          className="rounded-full w-11 h-11"
+          width={44}
+          height={44}
+          src={userData.photoURL}
+          alt="avatar"
+        />
         <div>
           <p className="text-base	font-semibold text-gray-900">
             {userData.displayName}

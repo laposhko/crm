@@ -1,5 +1,5 @@
 'use client';
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useAppDispatch } from '@/lib/hooks/useAppDispatch';
 import { updateUser } from '@/redux/auth/operations';
@@ -11,6 +11,7 @@ import { useSelector } from 'react-redux';
 import { selectAuthUser } from '@/redux/auth/selectors';
 import { toast, ToastContainer } from 'react-toastify';
 import Image from 'next/image';
+
 export interface SettingsFormProps {}
 export type SettingsFieldValues = {
   name: string;
@@ -20,11 +21,17 @@ export type SettingsFieldValues = {
 export default function SettingsForm({}: SettingsFormProps) {
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   const user = useSelector(selectAuthUser);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const initialValues: SettingsFieldValues = {
     name: '',
     image: null,
+  };
+  const handleClick = () => {
+    console.log('image click!');
+    fileInputRef.current?.click();
   };
   const handleImageChange = (
     event: React.ChangeEvent<HTMLInputElement>,
@@ -36,6 +43,26 @@ export default function SettingsForm({}: SettingsFormProps) {
       setFieldValue('image', file); // Set image file in Formik's state
     }
   };
+  const handleImageUpload = async (image: File) => {
+    console.log('handleupload ');
+    const formData = new FormData();
+    formData.append('file', image);
+    formData.append('upload_preset', 'TruScape'); // Replace with your preset name
+    try {
+      const response = await fetch(
+        `https://api.cloudinary.com/v1_1/dh0rwto3l/image/upload`,
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
+      const data = await response.json();
+      console.log('Uploaded URL:', data.secure_url); // This is the image URL
+      return data.secure_url;
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <ToastContainer></ToastContainer>
@@ -43,11 +70,23 @@ export default function SettingsForm({}: SettingsFormProps) {
       <Formik
         initialValues={initialValues}
         // validationSchema={validationSchema}
-        onSubmit={(values, { setSubmitting }) => {
-          console.log(values);
+        onSubmit={async (values, { setSubmitting }) => {
+          console.log('DDDDDD', values);
+          let photoURL;
+          if (values.image) {
+            console.log('image convert');
+            photoURL = await handleImageUpload(values.image);
+          }
+
           if (values.name || values.image) {
             try {
-              dispatch(updateUser(values));
+              console.log('ssss');
+              dispatch(
+                updateUser({
+                  name: values.name,
+                  image: photoURL,
+                })
+              );
               router.back();
             } catch (error) {
               toast.error('Something went wrong..Please try again');
@@ -62,64 +101,58 @@ export default function SettingsForm({}: SettingsFormProps) {
       >
         {({ isSubmitting, setFieldValue }) => (
           <Form className="flex flex-col gap-4">
-            <div className="relative">
-              <InputField
-                placeholder="Name"
-                id="name"
-                name="name"
-                label="name"
-              ></InputField>
-              {/* <ErrorMessage
-                name="name"
-                component="div"
-                className="text-red-700 text-sm mt-1"
-              /> */}
-            </div>
-
-            {/* Image Upload field */}
-            <div className="relative">
-              {/* Image Preview */}
-
-              {/* <Image
-                src={selectedImage || '/images/default-avatar.png'}
-                alt="avatar"
-                width={100}
-                height={100}
-              ></Image> */}
-              <Image
-                src={selectedImage || '/images/default-avatar.png'}
-                alt="Selected"
-                width={100}
-                height={100}
-                className="h-32 w-32 object-cover mt-2 rounded-full"
-              />
-              <label htmlFor="image" className="block text-sm font-medium">
+            <div className="flex items-center gap-6">
+              {/* Image Upload field */}
+              <div className="relative ">
+                {/* Image Preview */}
+                <Image
+                  src={
+                    selectedImage ||
+                    user?.photoURL ||
+                    '/images/default-avatar.png'
+                  }
+                  alt="Selected"
+                  width={100}
+                  height={100}
+                  onClick={handleClick}
+                  className="h-32 w-32 object-cover mt-2 rounded-full cursor-pointer"
+                />
+                {/* <label htmlFor="image" className="block text-sm font-medium">
                 Upload Image
-              </label>
-              <input
-                id="image"
-                name="image"
-                type="file"
-                accept="image/*"
-                onChange={(event) => handleImageChange(event, setFieldValue)}
-              />
-              {/* <ErrorMessage
+              </label> */}
+                <input
+                  ref={fileInputRef}
+                  id="image"
+                  name="image"
+                  type="file"
+                  accept="image/*"
+                  className="hidden"
+                  onChange={(event) => handleImageChange(event, setFieldValue)}
+                />
+                {/* <ErrorMessage
               name="image"
               component="div"
               className="text-red-700 text-sm mt-1"
             /> */}
+              </div>
+              <div className="relative">
+                <InputField
+                  placeholder="Name"
+                  id="name"
+                  name="name"
+                  label="name"
+                ></InputField>
+                {/* <ErrorMessage
+                name="name"
+                component="div"
+                className="text-red-700 text-sm mt-1"
+              /> */}
+              </div>
             </div>
-            <Button disabled={isSubmitting}>
+
+            <Button disabled={isSubmitting} type="submit">
               {isSubmitting ? 'Submitting...' : 'Submit'}
             </Button>
-            {/* Submit button
-            <button
-              type="submit"
-              className="bg-blue-500 text-white p-2 rounded disabled:opacity-50"
-              disabled={isSubmitting}
-            >
-              {isSubmitting ? 'Submitting...' : 'Submit'}
-            </button> */}
           </Form>
         )}
       </Formik>

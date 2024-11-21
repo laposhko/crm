@@ -3,6 +3,7 @@ interface AuthState {
     uid: string;
     email: string;
     displayName?: string;
+    photoURL?: string;
     // Add any other user fields that are part of your auth state
   } | null;
 }
