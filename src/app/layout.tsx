@@ -12,6 +12,10 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
+      <head>
+        <title>TruScape</title>
+        <link rel="icon" href="/favicon.svg" />
+      </head>
       <body className={font.className}>
         <Provider store={store}>{children}</Provider>
       </body>
