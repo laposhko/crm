@@ -5,10 +5,13 @@ import { Form, Formik } from 'formik';
 import Button from './button';
 import InputField from './input-field';
 import LogoUploader from './logo-uploader';
+import { CompanyStatus } from '@/lib/api';
+import { createCompany, Company } from '@/lib/api';
+import { nanoid } from 'nanoid';
 
 export type CompanyFieldValues = {
   name: string;
-  status: string;
+  status: CompanyStatus | '';
   country: string;
   category: string;
   date: string;
@@ -25,12 +28,31 @@ const initialValues: CompanyFieldValues = {
 };
 
 export interface CompanyFormProps {
-  onSubmit: (values: CompanyFieldValues) => void | Promise<void>;
+  // onSubmit: (values: CompanyFieldValues) => void | Promise<void>;
 }
 
-export default function CompanyForm({ onSubmit }: CompanyFormProps) {
+export default function CompanyForm({}: CompanyFormProps) {
   return (
-    <Formik initialValues={initialValues} onSubmit={onSubmit}>
+    <Formik
+      initialValues={initialValues}
+      onSubmit={(values, { setSubmitting }) => {
+        console.log(values);
+        const newCompany = {
+          id: nanoid(),
+          title: values.name,
+          description: values.description,
+          status: CompanyStatus,
+          joinedDate: values.date,
+          hasPromotions: false,
+          // categoryId: ,
+          categoryTitle: values.category,
+          // countryId: string;
+          countryTitle: values.country,
+          // avatar?: string;
+        };
+        // createCompany(values); NEED TRANSFORM DATA
+      }}
+    >
       <Form className="flex flex-col gap-10">
         <p className="mb-0.5 text-xl">Add new company</p>
         <div className="flex gap-6">

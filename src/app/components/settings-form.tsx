@@ -44,7 +44,6 @@ export default function SettingsForm({}: SettingsFormProps) {
     }
   };
   const handleImageUpload = async (image: File) => {
-    console.log('handleupload ');
     const formData = new FormData();
     formData.append('file', image);
     formData.append('upload_preset', 'TruScape'); // Replace with your preset name
@@ -57,7 +56,6 @@ export default function SettingsForm({}: SettingsFormProps) {
         }
       );
       const data = await response.json();
-      console.log('Uploaded URL:', data.secure_url); // This is the image URL
       return data.secure_url;
     } catch (error) {
       console.log(error);
@@ -71,16 +69,13 @@ export default function SettingsForm({}: SettingsFormProps) {
         initialValues={initialValues}
         // validationSchema={validationSchema}
         onSubmit={async (values, { setSubmitting }) => {
-          console.log('DDDDDD', values);
           let photoURL;
           if (values.image) {
-            console.log('image convert');
             photoURL = await handleImageUpload(values.image);
           }
 
           if (values.name || values.image) {
             try {
-              console.log('ssss');
               dispatch(
                 updateUser({
                   name: values.name,
