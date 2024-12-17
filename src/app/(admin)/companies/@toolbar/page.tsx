@@ -7,7 +7,7 @@ export default function Page({}: PageProps) {
   return (
     <Toolbar>
       <SearchInput></SearchInput>
-      <AddCompanyButton></AddCompanyButton>
+      {/* <AddCompanyButton></AddCompanyButton> */}
     </Toolbar>
   );
 }
