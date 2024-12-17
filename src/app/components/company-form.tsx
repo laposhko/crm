@@ -1,14 +1,12 @@
-'use client';
-
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Formik } from 'formik';
 import Button from './button';
 import InputField from './input-field';
 import LogoUploader from './logo-uploader';
-import { CompanyStatus } from '@/lib/api';
-import { createCompany, Company } from '@/lib/api';
+import { CompanyStatus, getCategories, getCountries } from '@/lib/api';
+// import { createCompany, Company } from '@/lib/api';
 import { nanoid } from 'nanoid';
-
+import { Category, Country } from '@/lib/api';
 export type CompanyFieldValues = {
   name: string;
   status: CompanyStatus | '';
@@ -30,8 +28,31 @@ const initialValues: CompanyFieldValues = {
 export interface CompanyFormProps {
   // onSubmit: (values: CompanyFieldValues) => void | Promise<void>;
 }
+type Item = {
+  title: string;
+  id: string;
+};
+export default async function CompanyForm({}: CompanyFormProps) {
+  const [categories, setCategories] = useState<Category[]>([]);
+  const [countries, setCountries] = useState<Country[]>([]);
 
-export default function CompanyForm({}: CompanyFormProps) {
+  useEffect(() => {
+    // Fetch categories and countries asynchronously
+    const fetchData = async () => {
+      const fetchedCategories = await getCategories();
+      const fetchedCountries = await getCountries();
+      setCategories(fetchedCategories);
+      setCountries(fetchedCountries);
+    };
+    fetchData();
+  }, []);
+  const findIdByTitle = <T extends Item>(
+    items: T[],
+    title: string
+  ): string | null => {
+    const foundItem = items.find((item) => item.title === title);
+    return foundItem ? foundItem.id : null; // Returns null if no match is found
+  };
   return (
     <Formik
       initialValues={initialValues}
@@ -41,16 +62,17 @@ export default function CompanyForm({}: CompanyFormProps) {
           id: nanoid(),
           title: values.name,
           description: values.description,
-          status: CompanyStatus,
+          status: values.status,
           joinedDate: values.date,
           hasPromotions: false,
-          // categoryId: ,
+          categoryId: findIdByTitle(categories, values.category),
           categoryTitle: values.category,
-          // countryId: string;
+          countryId: findIdByTitle(countries, values.country),
           countryTitle: values.country,
           // avatar?: string;
         };
-        // createCompany(values); NEED TRANSFORM DATA
+        console.log(newCompany);
+        // createCompany(newCompany);
       }}
     >
       <Form className="flex flex-col gap-10">
